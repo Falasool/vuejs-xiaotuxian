@@ -4,6 +4,8 @@ import HelloWorld from '@/components/HelloWorld.vue'
 </script>
 
 <template>
+  <!-- 一级路由出口组件 -->
+  <router-view></router-view>
   <el-button type="primary">Primary</el-button>
 </template>
 
