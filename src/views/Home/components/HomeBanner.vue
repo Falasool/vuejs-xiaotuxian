@@ -35,7 +35,7 @@ onMounted(() => {
   height: 500px;
   position: absolute;
   left: 250px;
-  top: 204px;
+  top: 185px;
   z-index: 98;
 
   img {

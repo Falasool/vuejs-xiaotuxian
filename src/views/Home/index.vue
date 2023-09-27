@@ -8,8 +8,8 @@ import HomeProduct from './components/HomeProduct.vue'
 
 <template>
   <HomeBanner></HomeBanner>
-  <HomeHot></HomeHot>
   <HomeCategory></HomeCategory>
   <HomeNew></HomeNew>
+  <HomeHot></HomeHot>
   <HomeProduct></HomeProduct>
 </template>
