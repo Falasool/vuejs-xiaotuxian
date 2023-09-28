@@ -1,7 +1,14 @@
 import httpInstance from '@/utils/http'
-export function getBannerAPI() {
+
+// 获取Banner
+export function getBannerAPI(params = {}) {
+  // 默认为1
+  const { distributionSite = '1' } = params
   // return的是一个promise对象
-  return httpInstance({ url: '/home/banner' })
+  return httpInstance({
+    url: '/home/banner',
+    params: { distributionSite }
+  })
 }
 
 /**
@@ -22,4 +29,13 @@ export const findNewAPI = () => {
  */
 export const getHotAPI = () => {
   return httpInstance({ url: 'home/hot' })
+}
+
+/**
+ * @description: 获取产品列表
+ * @param {*}
+ * @return {*}
+ */
+export const getGoodsAPI = () => {
+  return httpInstance({ url: '/home/goods' })
 }
