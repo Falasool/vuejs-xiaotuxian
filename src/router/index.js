@@ -38,7 +38,13 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
     }
-  ]
+  ],
+  // 路由滚动行为定制
+  scrollBehavior() {
+    return {
+      top: 0
+    }
+  }
 })
 
 export default router
