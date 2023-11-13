@@ -49,7 +49,8 @@ const load = async () => {
   if (res.result.items.length === 0) {
     disabled.value = true
   }
-}
+} 
+ 
 </script>
 
 <template>
