@@ -4,6 +4,7 @@ import { getGoodsAPI } from '@/apis/home'
 import { ref, onMounted } from 'vue'
 import { getDetail } from '@/apis/detail'
 import { useRoute } from 'vue-router'
+import  DetailHot  from "./components/DetailHot.vue";
 // 使用 'useRoute' 函数获取当前路由信息
 const route = useRoute()
 const goods = ref([])
@@ -127,7 +128,12 @@ getGoods()
               </div>
             </div>
             <!-- 24热榜+专题推荐 -->
-            <div class="goods-aside"></div>
+            <div class="goods-aside">
+              <!-- 24小时 -->
+              <DetailHot></DetailHot>
+              <!-- 周 -->
+              <DetailHot></DetailHot>
+            </div>
           </div>
         </div>
       </div>
