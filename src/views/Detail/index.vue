@@ -5,7 +5,7 @@ import { ref, onMounted } from 'vue'
 import { getDetail } from '@/apis/detail'
 import { useRoute } from 'vue-router'
 import DetailHot from './components/DetailHot.vue'
-import ImageView from '@/components/ImageView/index.vue'
+import XtxImageView from '@/components/ImageView/index.vue'
 import XtxSku from '@/components/XtxSku/index.vue'
 // 使用 'useRoute' 函数获取当前路由信息
 const route = useRoute()
@@ -55,7 +55,7 @@ const skuChange = () => {
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 手写 -->
-              <ImageView></ImageView>
+              <XtxImageView></XtxImageView>
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
