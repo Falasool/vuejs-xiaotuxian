@@ -1,4 +1,23 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+// 表单校验-step1:准备表单对象
+const form = ref({
+  account: '',
+  password: ''
+})
+// 表单校验-step3:准备规则对象
+const rules = {
+  // 用户名：必填、不合法时返回的内容、触发条件：失焦
+  account: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
+  // 密码：
+  password: [
+    // 规则一：密码：必填、6-14字符、不合法时返回的内容、触发条件：失焦
+    { required: true, message: '密码不能为空', trigger: 'blur' },
+    // 规则二：6-14字符、不合法时返回的内容、触发条件：失焦
+    { min: 6, max: 14, message: '密码6-14字符', trigger: 'blur' }
+  ]
+}
+</script>
 
 <template>
   <div>
@@ -25,12 +44,22 @@
         </nav>
         <div class="account-box">
           <div class="form">
-            <el-form label-position="right" label-width="60px" status-icon>
-              <el-form-item label="账户">
-                <el-input />
+            <!-- 表单校验-step2:绑定表单对象 -->
+            <!-- 表单校验-step4:绑定规则对象 -->
+            <el-form
+              :model="form"
+              :rules="rules"
+              label-position="right"
+              label-width="60px"
+              status-icon
+            >
+              <!-- 表单校验-step5:指定校验的字段名 -->
+              <el-form-item prop="account" label="账户">
+                <!-- 表单校验-step6: 双向绑定表单对象-->
+                <el-input v-model="form.account" />
               </el-form-item>
-              <el-form-item label="密码">
-                <el-input />
+              <el-form-item prop="password" label="密码">
+                <el-input v-model="form.password" />
               </el-form-item>
               <el-form-item label-width="22px">
                 <el-checkbox size="large"> 我已同意隐私条款和服务条款 </el-checkbox>
