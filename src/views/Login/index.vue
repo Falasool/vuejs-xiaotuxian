@@ -3,7 +3,9 @@ import { ref } from 'vue'
 // 表单校验-step1:准备表单对象
 const form = ref({
   account: '',
-  password: ''
+  password: '',
+  // 是否勾选协议
+  agree: true
 })
 // 表单校验-step3:准备规则对象
 const rules = {
@@ -15,6 +17,22 @@ const rules = {
     { required: true, message: '密码不能为空', trigger: 'blur' },
     // 规则二：6-14字符、不合法时返回的内容、触发条件：失焦
     { min: 6, max: 14, message: '密码6-14字符', trigger: 'blur' }
+  ],
+  // 同意用户协议
+  agree: [
+    {
+      validator: (rule, value, callback) => {
+        // rule：自定义校验逻辑
+        // value：当前输入的数据(input)
+        // callback：校验处理函数(通过/否决) 校验通过调用
+        console.log(value)
+        if(value){
+          callback()
+        }else{
+          callback(new Error('请同意用户协议'))
+        }
+      }
+    }
   ]
 }
 </script>
@@ -61,8 +79,10 @@ const rules = {
               <el-form-item prop="password" label="密码">
                 <el-input v-model="form.password" />
               </el-form-item>
-              <el-form-item label-width="22px">
-                <el-checkbox size="large"> 我已同意隐私条款和服务条款 </el-checkbox>
+              <!-- 指定校验字段 -->
+              <el-form-item prop="agree" label-width="22px">
+                <!-- 双向绑定数据 -->
+                <el-checkbox v-model="agree" size="large"> 我已同意隐私条款和服务条款 </el-checkbox>
               </el-form-item>
               <el-button size="large" class="subBtn">点击登录</el-button>
             </el-form>
