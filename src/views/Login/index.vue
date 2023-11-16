@@ -18,7 +18,8 @@ const rules = {
     // 规则二：6-14字符、不合法时返回的内容、触发条件：失焦
     { min: 6, max: 14, message: '密码6-14字符', trigger: 'blur' }
   ],
-  // 同意用户协议
+  // 自定义校验规则
+  // 必须同意用户协议
   agree: [
     {
       validator: (rule, value, callback) => {
@@ -26,14 +27,27 @@ const rules = {
         // value：当前输入的数据(input)
         // callback：校验处理函数(通过/否决) 校验通过调用
         console.log(value)
-        if(value){
+        if (value) {
           callback()
-        }else{
+        } else {
           callback(new Error('请同意用户协议'))
         }
       }
     }
   ]
+}
+
+// 统一校验-获取form实例
+const formRef = ref(null)
+const doLogin = () => {
+  // 调用实例方法
+  formRef.value.validate((valid) => {
+    // valid：所有表单通过校验时为true
+    console.log(valid)
+    if (valid) {
+      // TODO Login
+    }
+  })
 }
 </script>
 
@@ -65,6 +79,7 @@ const rules = {
             <!-- 表单校验-step2:绑定表单对象 -->
             <!-- 表单校验-step4:绑定规则对象 -->
             <el-form
+              ref="formRef"
               :model="form"
               :rules="rules"
               label-position="right"
@@ -84,7 +99,7 @@ const rules = {
                 <!-- 双向绑定数据 -->
                 <el-checkbox v-model="agree" size="large"> 我已同意隐私条款和服务条款 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              <el-button size="large" class="subBtn" @click="doLogin">点击登录</el-button>
             </el-form>
           </div>
         </div>
