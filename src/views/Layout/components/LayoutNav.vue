@@ -1,11 +1,10 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
   <nav class="app-topnav">
     <div class="container">
       <ul>
+        <!-- 多模版渲染：区分登录状态/非登录状态 -->
         <template v-if="true">
           <li>
             <a href="#"><i class="iconfont icon-user"></i>周杰伦</a>
@@ -21,7 +20,9 @@
           <li><a href="javascript:;">会员中心</a></li>
         </template>
         <template v-else>
-          <li><a href="javascript:;">请先登录</a></li>
+          <!-- $router.push 编程式导航 -->
+          <!-- router-link 声明式导航 -->
+          <li><a href="javascript:;" @click="$router.push('/login')">请先登录</a></li>
           <li><a href="javascript:;">帮助中心</a></li>
           <li><a href="javascript:;">关于我们</a></li>
         </template>

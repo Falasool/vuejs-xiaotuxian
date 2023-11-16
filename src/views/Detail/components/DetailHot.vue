@@ -1,6 +1,6 @@
 <script setup>
 import { getHotGoodsAPI } from '@/apis/detail'
-import { ref, onMounted, computed, defineProps } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 // 设计props参数，适配不同的title和数据
