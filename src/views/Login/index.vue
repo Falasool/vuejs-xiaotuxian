@@ -1,5 +1,9 @@
 <script setup>
 import { ref } from 'vue'
+import { loginAPI } from '@/apis/user'
+import 'element-plus/theme-chalk/el-message.css'
+import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
 // 表单校验-step1:准备表单对象
 const form = ref({
   account: '',
@@ -39,16 +43,36 @@ const rules = {
 
 // 统一校验-获取form实例
 const formRef = ref(null)
+const router = useRouter()
 const doLogin = () => {
+  const { account, password } = form.value
   // 调用实例方法
-  formRef.value.validate((valid) => {
+  formRef.value.validate(async (valid) => {
     // valid：所有表单通过校验时为true
     console.log(valid)
     if (valid) {
-      // TODO Login
+      // Login
+      const res = await loginAPI({ account, password })
+      console.log(res)
+      // 成功后：1.提示用户 2.跳转到首页
+      ElMessage({
+        type: 'success',
+        message: 'success login'
+      })
+      router.replace({ path: '/' })
+      // 登录失败：用http.js的拦截器做统一控制
     }
   })
 }
+
+// 从 @/apis/user 中导入 loginAPI 函数。
+// 定义 formRef，这是一个 Vue ref，用于在 Vue 组件中存储对表单的引用。
+// 定义 doLogin 函数，用于处理登录逻辑。
+// doLogin 函数中，首先从 form.value 中解构出 account 和 password。
+// 调用 formRef.value.validate 方法来校验表单。这个方法接收一个回调函数，该回调函数标记为 async 表明它是异步的。
+// 在回调函数内，首先检查表单校验是否通过（valid 是否为 true）。
+// 如果通过，使用 await 关键字调用 loginAPI 函数，并等待登录操作完成。由于 loginAPI 是异步的，await 确保登录操作完成后再继续执行。
+// 通过使用 async 和 await，这段代码以接近同步代码的方式处理异步逻辑，使得代码更易读、更易维护。
 </script>
 
 <template>

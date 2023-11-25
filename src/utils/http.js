@@ -1,6 +1,8 @@
 // axios 基础封装
 
 import axios from 'axios'
+import 'element-plus/theme-chalk/el-message.css'
+import { ElMessage } from 'element-plus'
 
 // 创建axios实例
 const httpInstance = axios.create({
@@ -26,29 +28,35 @@ httpInstance.interceptors.request.use(
 httpInstance.interceptors.response.use(
   (res) => res.data,
   (e) => {
-    return Promise.reject(e)
+    // 统一错误提示
+    return (
+      Promise.reject(e),
+      ElMessage({
+        type: 'warning',
+        message: e.response.data.message //无效的密码
+      })
+    )
   }
 )
 
 // 暴露实例
 export default httpInstance
 
-
 // 这段代码主要做了以下几个事情：
 
-// 创建 Axios 实例： 
+// 创建 Axios 实例：
 // 使用 axios.create 方法创建了一个名为 httpInstance 的 Axios 实例，
 // 该实例已经预设了一些配置，包括根域名和超时时间。
 
-// 请求拦截器： 
+// 请求拦截器：
 // 使用 httpInstance.interceptors.request.use 添加了一个请求拦截器。
 // 这个拦截器在每个请求发送之前执行，可以用来对请求进行一些处理，比如在请求头中添加 token。
 
-// 响应拦截器： 
+// 响应拦截器：
 // 使用 httpInstance.interceptors.response.use 添加了一个响应拦截器。
 // 这个拦截器在每个响应接收之后执行，用来处理响应数据。在这里，它只返回响应的数据部分。
 
-// 导出实例： 
+// 导出实例：
 // 最后，通过 export default httpInstance 导出了创建好的 Axios 实例，
 // 这样其他地方就可以直接引入并使用这个实例进行 HTTP 请求。
 
