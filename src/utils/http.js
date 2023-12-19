@@ -3,6 +3,8 @@
 import axios from 'axios'
 import 'element-plus/theme-chalk/el-message.css'
 import { ElMessage } from 'element-plus'
+// 从pinia拿到token
+import { useUserStore } from '@/stores/user'
 
 // 创建axios实例
 const httpInstance = axios.create({
@@ -19,10 +21,19 @@ const httpInstance = axios.create({
 // axios请求拦截器
 httpInstance.interceptors.request.use(
   (config) => {
+    // 1. 从pinia获取token
+    const useStore = useUserStore()
+    const token = userStore.userInfo.token
+    // 2. 按后端要求拼接token
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
     return config
   },
   (e) => Promise.reject(e)
 )
+// 测试：接口里有没有token数据 - 控制台- fetch/xhr-request header-authorization
+
 
 // axios响应式拦截器
 httpInstance.interceptors.response.use(
