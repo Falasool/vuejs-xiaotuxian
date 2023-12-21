@@ -1,4 +1,18 @@
-<script setup></script>
+<script setup>
+import { useuserStore } from '@/stores/user'
+import { useRouter } from 'vue-router'
+const userStore = useuserStore()
+const router = useRouter()
+const confirm = () => {
+  console.log('用户要求退出登录')
+  // 退出登录的逻辑
+  // 1. 清除当前用户信息
+  // Q：用户信息在哪存放；A：stores/user.js 里的 const userInfo，在这里写一个方法 clearUserInfo 用于清除用户信息
+  userStore.clearUserInfo()
+  // 2. 跳转到登录界面
+  router.push('/login')
+}
+</script>
 
 <template>
   <nav class="app-topnav">
@@ -10,7 +24,12 @@
             <a href="#"><i class="iconfont icon-user"></i>周杰伦</a>
           </li>
           <li>
-            <el-popconfirm title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
+            <el-popconfirm
+              @confirm="confirm"
+              title="确认退出吗?"
+              confirm-button-text="确认"
+              cancel-button-text="取消"
+            >
               <template #reference>
                 <a href="javascript:;">退出登录</a>
               </template>
@@ -65,5 +84,3 @@
   }
 }
 </style>
-
-
