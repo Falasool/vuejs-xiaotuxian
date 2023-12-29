@@ -45,7 +45,13 @@ httpInstance.interceptors.response.use(
       ElMessage({
         type: 'warning',
         message: e.response.data.message //无效的密码
-      })
+      }),
+      // 401token失效处理
+      // 1. 清除本地用户数据
+      // 2. 跳转到登录页
+      if(e.response.status === 401){
+        
+      }
     )
   }
 )

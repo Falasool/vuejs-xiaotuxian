@@ -7,7 +7,10 @@ import { useRoute } from 'vue-router'
 import DetailHot from './components/DetailHot.vue'
 import XtxImageView from '@/components/ImageView/index.vue'
 import XtxSku from '@/components/XtxSku/index.vue'
+import { ElMessage } from 'element-plus'
+import { useCartStore } from '@/stores/cartStroe'
 // 使用 'useRoute' 函数获取当前路由信息
+const cartStore = useCartStore()
 const route = useRoute()
 const goods = ref([])
 // 定义一个异步函数 'getGoods'
@@ -22,9 +25,37 @@ const getGoods = async () => {
 }
 onMounted(() => getGoodsAPI())
 
+let skuObj = {}
 // 给sku组件绑定：被操作规格时
-const skuChange = () => {
+const skuChange = (sku) => {
   console.log(sku)
+  skuObj = sku
+}
+
+// count
+const count = ref(1)
+const countChange = (count) => {
+  console.log(count)
+}
+
+// 添加购物车
+const addCart = () => {
+  if (skuObj.skuId) {
+    // 规格已经选择，触发Pinia的action函数
+    cartStore.addCart({
+      id: goods.value.id,
+      name: goods.value.name,
+      picture: goods.value.picture,
+      price: goods.value.price,
+      count: count.value,
+      skuId: skuObj.skuId,
+      attrsText: skuObj.specsText,
+      selected: true
+    })
+  } else {
+    // 规格未选择，提示用户
+    ElMessage.warning('请选择规格')
+  }
 }
 </script>
 
